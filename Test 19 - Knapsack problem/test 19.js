@@ -38,7 +38,7 @@ knapsack = (elementos, capacidadMax) => {
         
     }
 
-    // se reconstruye la lista con los elementos seleccionados
+    // se reconstruye la lista con los elementos seleccionados para la mochila
     let elementoSeleccionado = [];
     let i = elementos.length;
     let j = capacidadMax;
@@ -50,16 +50,35 @@ knapsack = (elementos, capacidadMax) => {
         i--;
     }
 
-   /*  console.log(elementoSeleccionado) */
+    //BONUS 2
+    // se reconstruye la lista de elementos no seleccionados
+    let elementosNoSeleccionados = [];
+    for (let k = 0; k < elementos.length; k++) {
+        if (!elementoSeleccionado.includes(elementos[k])) {
+            elementosNoSeleccionados.push(elementos[k]);
+        }
+    }
 
-    // se devuelve la lista de elementos seleccionados y el valor total
-    let valorMax = mochilaAux[elementos.length][capacidadMax];
-    return { elementos: elementoSeleccionado, valorTotal: valorMax };
-    
+    // se calcula el valor total de los elementos no seleccionados
+    let valorTotalNoSeleccionado = 0;
+    for (let k = 0; k < elementosNoSeleccionados.length; k++) {
+        valorTotalNoSeleccionado += elementosNoSeleccionados[k][1];
+    }
+
+    // Devolvemos la lista de elementos seleccionados, la lista de elementos no seleccionados y los valores totales
+    let valorTotalSeleccionado = mochilaAux[elementos.length][capacidadMax];
+    return {
+        elementosSeleccionados: elementoSeleccionado,
+        elementosNoSeleccionados: elementosNoSeleccionados,
+        valorTotalSeleccionado: valorTotalSeleccionado,
+        valorTotalNoSeleccionado: valorTotalNoSeleccionado
+    };
 }
 
 
-let result = knapsack(objetos, capacidadMax);
+let resultado = knapsack(objetos, capacidadMax);
 
-console.log("Elementos seleccionados:", result.elementos);
-console.log("Valor total obtenido:", result.valorTotal);
+console.log("Elementos seleccionados:", resultado.elementosSeleccionados);
+console.log("Elementos no seleccionados:", resultado.elementosNoSeleccionados);
+console.log("Valor total obtenido de elementos seleccionados:" + resultado.valorTotalSeleccionado);
+console.log("Valor total obtenido de los elementos no seleccionados:" + resultado.valorTotalNoSeleccionado);
